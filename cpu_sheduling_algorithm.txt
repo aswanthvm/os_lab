@@ -1,0 +1,140 @@
+Algorithm FCFS_Scheduling
+Input: n (number of processes), for each process i: arrival time at[i], burst time bt[i]
+Output: Completion Time (CT), Turnaround Time (TAT), Waiting Time (WT) for each process
+
+1. For i = 0 to n-1:
+      Read at[i], bt[i]
+      Set id[i] = i + 1
+
+2. Sort processes by arrival time (ascending)
+
+3. Set time = 0, twt = 0, ttat = 0
+
+4. For i = 0 to n-1:
+      If time < at[i], then time = at[i]
+      ct[i] = time + bt[i]
+      tat[i] = ct[i] - at[i]
+      wt[i] = tat[i] - bt[i]
+      twt += wt[i]
+      ttat += tat[i]
+      time = ct[i]
+
+5. Print table header: "P  AT  BT  CT  TAT  WT"
+6. For i = 0 to n-1:
+      Print id[i], at[i], bt[i], ct[i], tat[i], wt[i]
+
+7. Print "Average WT = twt/n"
+8. Print "Average TAT = ttat/n"
+
+End Algorithm
+------------------------------------------------------------
+
+Algorithm SJF_Scheduling
+Input: n (number of processes), for each process: AT and BT
+Output: CT, TAT, WT for each process, and averages
+
+1. For i = 0 to n-1:
+      Read AT[i], BT[i]
+      Set ID[i] = i + 1
+
+2  create a function for sort-bt
+
+2. Sort all processes by Arrival Time (AT)
+
+3. Initialize: time = 0, ttat = 0, twt = 0
+
+4. For i = 0 to n-1:
+      Call sort_bt(processes, n, time) to rearrange shortest job that has arrived
+      If time < AT[i], set time = AT[i]
+      CT[i] = time + BT[i]
+      TAT[i] = CT[i] - AT[i]
+      WT[i] = TAT[i] - BT[i]
+      time = CT[i]
+      ttat += TAT[i]
+      twt += WT[i]
+
+5. Print: "P  AT  BT  CT  TAT  WT"
+6. For i = 0 to n-1:
+      Print ID[i], AT[i], BT[i], CT[i], TAT[i], WT[i]
+
+7. Print: "Average WT = twt / n"
+8. Print: "Average TAT = ttat / n"
+
+End Algorithm
+
+------------------------------------------------------------------------------------------
+
+Algorithm RoundRobin_With_ArrivalTime
+Input: n (number of processes), for each: AT[i], BT[i], TQ (time quantum)
+Output: CT, TAT, WT for each process, and averages
+
+1. For i = 0 to n-1:
+     Read AT[i], BT[i]
+     Set ID[i] = i+1
+     Set RT[i] = BT[i]
+
+2. Set time = 0, done = 0
+
+3. While done < n:
+     executed = 0
+     For i = 0 to n-1:
+         If RT[i] > 0 and AT[i] <= time:
+             executed = 1
+             If RT[i] <= TQ:
+                 time += RT[i]
+                 RT[i] = 0
+                 CT[i] = time
+                 TAT[i] = CT[i] - AT[i]
+                 WT[i] = TAT[i] - BT[i]
+                 done += 1
+             Else:
+                 RT[i] -= TQ
+                 time += TQ
+     If executed == 0:
+         time += 1
+
+4. Compute average WT and TAT
+
+5. Print table:
+   P  AT  BT  CT  TAT  WT
+   And averages
+
+End Algorithm
+
+---------------------------------------------------------------
+
+Algorithm Priority_NonPreemptive_With_Arrival
+Input: n (number of processes), for each: AT[i], BT[i], PRI[i]
+Output: CT, TAT, WT for each process, and averages
+
+1. For i = 0 to n-1:
+     Read AT[i], BT[i], PRI[i]
+     Set done[i] = 0
+
+2. Sort all processes by AT
+
+3. Initialize time = 0, doneCount = 0
+
+4. While doneCount < n:
+     Set idx = -1, high = ∞
+     For i = 0 to n-1:
+         If not done[i] and AT[i] <= time and PRI[i] < high:
+             idx = i, high = PRI[i]
+
+     If idx == -1:
+         time += 1 (CPU idle)
+     Else:
+         CT[idx] = time + BT[idx]
+         TAT[idx] = CT[idx] - AT[idx]
+         WT[idx] = TAT[idx] - BT[idx]
+         Mark done[idx] = 1
+         doneCount += 1
+         time = CT[idx]
+
+5. Compute average WT and TAT
+
+6. Print results:
+   ID  AT  BT  PRI  CT  TAT  WT
+   + averages
+
+End Algorithm
