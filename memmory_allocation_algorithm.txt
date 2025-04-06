@@ -1,0 +1,80 @@
+Algorithm FirstFitMemoryAllocation
+Input: blockSize[m], processSize[n]
+Output: Allocation of processes to memory blocks
+
+1. Initialize allocation[n] to -1
+2. For i = 0 to n - 1 do:
+      For j = 0 to m - 1 do:
+          If blockSize[j] >= processSize[i] then:
+              allocation[i] ← j
+              blockSize[j] ← processSize[i]
+              Break inner loop
+3. Print "Process No. | Process Size | Block No."
+4. For i = 0 to n - 1 do:
+      Print process i + 1, processSize[i], and allocated block (allocation[i] + 1)
+      If allocation[i] == -1, print "Not Allocated"
+5. Print "Free Blocks"
+6. For i = 0 to m - 1 do:
+      Print block i + 1 and its remaining size blockSize[i]
+End Algorithm
+
+
+
+
+Algorithm BestFitMemoryAllocation
+Input: blockSize[m], processSize[n]
+Output: Allocation of processes to memory blocks
+
+1. Initialize allocation[n] to -1
+
+2. For i = 0 to n - 1 do:
+      bestIdx ← -1
+      For j = 0 to m - 1 do:
+          If blockSize[j] >= processSize[i] then:
+              If bestIdx == -1 or blockSize[j] < blockSize[bestIdx] then:
+                  bestIdx ← j
+      If bestIdx != -1 then:
+          allocation[i] ← bestIdx
+          blockSize[bestIdx] ← blockSize[bestIdx] - processSize[i]
+
+3. Print "Process No. | Process Size | Block No."
+4. For i = 0 to n - 1 do:
+      Print process i + 1, processSize[i], and allocated block (allocation[i] + 1)
+      If allocation[i] == -1, print "Not Allocated"
+
+5. Print "Free Blocks:"
+6. For i = 0 to m - 1 do:
+      Print block i + 1 and its remaining size blockSize[i]
+
+End Algorithm
+
+
+
+
+Algorithm WorstFitMemoryAllocation
+Input: blockSize[m], processSize[n]
+Output: Allocation of processes to memory blocks
+
+1. Initialize allocation[n] to -1
+
+2. For i = 0 to n - 1 do:
+      wstIdx ← -1
+      For j = 0 to m - 1 do:
+          If blockSize[j] >= processSize[i] then:
+              If wstIdx == -1 or blockSize[j] > blockSize[wstIdx] then:
+                  wstIdx ← j
+      If wstIdx != -1 then:
+          allocation[i] ← wstIdx
+          blockSize[wstIdx] ← blockSize[wstIdx] - processSize[i]
+
+3. Print "Process No. | Process Size | Block No."
+4. For i = 0 to n - 1 do:
+      Print process i + 1, processSize[i], and block number (allocation[i] + 1)
+      If allocation[i] == -1, print "Not Allocated"
+
+5. Print "Free Blocks:"
+6. For i = 0 to m - 1 do:
+      Print blockSize[i] with arrows in between
+
+End Algorithm
+
