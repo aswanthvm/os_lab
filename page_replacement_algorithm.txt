@@ -1,0 +1,96 @@
+Algorithm FIFO_Page_Replacement
+Input: pages[0..n-1], number of frames fsize
+Output: Total number of page faults and frame states
+
+1. Initialize frames[0..fsize-1] to -1
+2. Set front = 0, rear = -1, page_faults = 0
+
+3. For i = 0 to n-1:
+     page = pages[i]
+     found = false
+
+     For j = 0 to fsize-1:
+         If frames[j] == page:
+             found = true
+             Print "page page already there"
+             Break
+
+     If not found:
+         page_faults += 1
+         rear = (rear + 1) % fsize
+         frames[rear] = page
+         Print "page page loaded in frame rear"
+
+     Print current frame state
+
+4. Print "Total page faults: page_faults"
+
+End Algorithm
+
+----------------------------------------------------------------
+Algorithm LRU_Page_Replacement
+Input: pages[0..n-1], number of frames = MAX_FRAMES
+Output: Total number of page faults and frame states
+
+1. Initialize frames[0..MAX_FRAMES-1] = -1
+   Initialize counter[0..MAX_FRAMES-1] = 0
+   page_faults = 0
+
+2. For i = 0 to n-1:
+    page = pages[i]
+    found = false
+
+    For j = 0 to MAX_FRAMES-1:
+        If frames[j] == page:
+            found = true
+            Print "page page is already there"
+            Break
+
+    If not found:
+        lru = index of frame with max(counter)
+        Replace frames[lru] = page
+        counter[lru] = 0
+        Increment page_faults
+        Print "page page is loaded in frame lru"
+
+    Increment counter[j] for all j
+    Set counter of the current page's frame = 0
+
+    Display current frame content
+
+3. Print "Total Page Faults: page_faults"
+
+End Algorithm
+---------------------------------------------------------------
+
+Algorithm LFU_Page_Replacement
+Input: pages[0..n-1], number of frames = MAX_FRAMES
+Output: Total number of page faults and frame states
+
+1. Initialize frames[0..MAX_FRAMES-1] = -1
+   Initialize counts[0..MAX_FRAMES-1] = 0
+   page_faults = 0
+
+2. For i = 0 to n-1:
+    page = pages[i]
+    found = false
+
+    For j = 0 to MAX_FRAMES-1:
+        If frames[j] == page:
+            counts[j] += 1
+            found = true
+            Print "page page is already in memory"
+            Break
+
+    If not found:
+        pos = index of frame with minimum count
+        Replace frames[pos] = page
+        counts[pos] = 1
+        page_faults += 1
+        Print "page page is loaded in frame pos"
+
+    Display current frame contents
+
+3. Print "Total Page Faults: page_faults"
+
+End Algorithm
