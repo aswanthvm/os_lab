@@ -1,0 +1,101 @@
+Algorithm Bankers_Safety
+Input:
+    np = number of processes
+    nr = number of resource types
+    alloc[np][nr] = Allocation Matrix
+    max[np][nr] = Maximum Requirement Matrix
+    avail[nr] = Available resources
+
+Output: Safe sequence if system is in safe state, else unsafe message
+
+1. Initialize:
+    For i = 0 to np - 1:
+        For j = 0 to nr - 1:
+            need[i][j] = max[i][j] - alloc[i][j]
+    done[i] = 0 for all i
+    count = 0
+
+2. While count < np:
+    found = false
+    For i = 0 to np - 1:
+        If not done[i]:
+            For j = 0 to nr - 1:
+                If need[i][j] > avail[j]:
+                    Break inner loop
+            If j == nr:
+                For k = 0 to nr - 1:
+                    avail[k] += alloc[i][k]
+                done[i] = 1
+                seq[count] = i
+                count += 1
+                found = true
+
+    If not found:
+        Break
+
+3. If count == np:
+       Print "System is in safe state"
+       Print "Safe Sequence: seq[0] -> seq[1] -> ... -> seq[np-1]"
+   Else:
+       Print "System is in unsafe state"
+
+End Algorithm
+----------------------------------------------------------------------------------------
+
+PRODUCER CONSUMER
+
+Initialize:
+    buffer[BUFFER_SIZE]
+    in = 0, out = 0
+    sem empty = BUFFER_SIZE
+    sem full = 0
+    mutex = unlocked
+
+Producer():
+    item = 1
+    while true:
+        wait(empty)
+        lock(mutex)
+        
+        buffer[in] = item
+        print "Produced item", item
+        in = (in + 1) % BUFFER_SIZE
+        item += 1
+
+        unlock(mutex)
+        signal(full)
+
+Consumer():
+    while true:
+        wait(full)
+        lock(mutex)
+
+        item = buffer[out]
+        print "Consumed item", item
+        out = (out + 1) % BUFFER_SIZE
+
+        unlock(mutex)
+        signal(empty)
+
+Main:
+    create producer thread
+    create consumer thread
+    join producer and consumer threads
+-----------------------------------------------------------------------------------------------
+
+IPC
+
+Start
+
+1. key ← generate key using ftok("shmfile.txt", 'R')
+2. shmid ← create shared memory using shmget(key, SHM_SIZE, IPC_CREAT | 0666)
+3. shm ← attach shared memory using shmat(shmid, NULL, 0)
+
+4. Write "Shared Memory Content" into shm
+5. Print "Data Written To Shared Memory"
+6. Print content of shm
+
+7. Detach from shared memory using shmdt(shm)
+8. Destroy shared memory using shmctl(shmid, IPC_RMID, 0)
+
+End
