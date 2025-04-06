@@ -18,7 +18,7 @@ Output: Allocation of processes to memory blocks
       Print block i + 1 and its remaining size blockSize[i]
 End Algorithm
 
-
+------------------------------------------------------------------------------------
 
 
 Algorithm BestFitMemoryAllocation
@@ -49,7 +49,7 @@ Output: Allocation of processes to memory blocks
 End Algorithm
 
 
-
+------------------------------------------------------------------------------------------
 
 Algorithm WorstFitMemoryAllocation
 Input: blockSize[m], processSize[n]
